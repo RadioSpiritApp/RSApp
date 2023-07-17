@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Radio Spirits</string>
+    <string name="facebook_app_id">340852806477062</string>
+    <string name="fb_login_protocol_scheme">fb340852806477062</string>
+</resources>

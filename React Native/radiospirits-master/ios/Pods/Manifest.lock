@@ -55,7 +55,7 @@ DEPENDENCIES:
   - IQKeyboardManager
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -77,4 +77,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 214321ead086e9828a14a64c6ab29134e6494041
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.12.1

@@ -1737,7 +1737,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RadioSpirit/Pods-RadioSpirit-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RadioSpirit/Pods-RadioSpirit-resources.sh",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -1746,7 +1746,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RadioSpirit/Pods-RadioSpirit-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RadioSpirit/Pods-RadioSpirit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C394CD91D6DF106AF217ADAE /* [CP] Check Pods Manifest.lock */ = {

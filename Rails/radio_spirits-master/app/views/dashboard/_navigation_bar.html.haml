@@ -1,0 +1,31 @@
+/ MainMenu-Area
+%nav{ class: 'mainmenu-area', data: {spy: 'affix', offset: { top: '200' } } }
+  .right-button
+    %a.downloadbutton#appdownloadlink{ href: "#download_page" }
+      Download Free App
+
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand{ href: "#"}
+        %button.navbar-toggle.pull-left{ type: 'button', data: { target: "#primary_menu", toggle: 'collapse'} }
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+
+    %div.collapse.navbar-collapse#primary_menu
+      %ul.nav.navbar-nav.mainmenu
+        %li.active
+          %a{ href: "#home_page" } Home
+        %li
+          %a{ href: "#progress_page" } About
+        %li
+          %a{ href: "#features_page" } Features
+        %li
+          %a{ href: "#gallery_page" } Gallery
+        %li
+          %a.downloadbutton{ href: "#download_page" } Download Free App
+        %li
+          %a{ href: "#price_page" } Plans
+        %li
+          %a{ href: "#questions_page" } FAQ
+/ MainMenu-Area-End

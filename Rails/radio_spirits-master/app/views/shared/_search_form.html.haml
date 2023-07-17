@@ -1,0 +1,12 @@
+.col-md-5.no-l-pad.m-b-10
+  = form_tag(search_action, method: :get) do
+    .input-group
+      .form-group.has-feedback.has-clear
+        = text_field_tag :search_query, params[:search_query], class: "form-control input-md", placeholder: placeholder_text
+        %span.form-control-clear.form-control-feedback.hidden{style: 'top: 5px;'}
+          %i.fa.fa-times
+      %span.input-group-btn
+        = submit_tag "Search", class: "btn btn-success btn-md", title: "Search records"
+
+
+

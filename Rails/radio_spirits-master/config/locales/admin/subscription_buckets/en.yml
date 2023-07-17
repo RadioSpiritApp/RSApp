@@ -1,0 +1,8 @@
+en:
+  subscription_buckets:
+    subscription_bucket_title: 'Subscription Bucket'
+    add_bucket: 'Add Bucket'
+    new_bucket: 'New Subscription Bucket'
+    action_success_message: 'Subscription Bucket was successfully %{message}.'
+    destroy_failure: 'Subscription Bucket was not destroyed'
+    edit_bucket: "Edit Subscription Bucket"

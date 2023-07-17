@@ -1,0 +1,28 @@
+= form_for :plan, :url => {:controller => 'plans', :action => plan.persisted? ? 'update' : 'create'}, html:{class: 'plan_form'}, method:  plan.persisted? ? 'PUT' : 'POST' do |f|
+  .form-group.required
+    = f.label :title
+    = f.text_field :title, class: "form-control", placeholder: "Plan title"
+  .form-group.required
+    = f.label :validity, "Validity (number of days)"
+    = f.select :validity, options_for_select(plan_validity_options, selected: plan.validity), {}, {class: 'form-control'}
+  .form-group.required
+    = f.label :amount
+    = f.select :amount, options_for_select(plan_amount_options, selected: plan.amount), {}, {class: 'form-control'}
+  .form-group.required
+    = f.label :itunes_id, "iTunes product id"
+    = f.text_field :itunes_id, class: "form-control", placeholder: "iTunes product Id"
+  .form-group.required
+    = f.label :play_store_id, "Google play store product id"
+    = f.text_field :play_store_id, class: "form-control", placeholder: "Google play store product Id"
+  - if plan.persisted?
+    .form-group
+      = f.label :active, "Is active?"
+      .radio
+        %label
+          = f.radio_button :active, true
+          Yes
+        %label
+          = f.radio_button :active, false
+          No
+  = f.submit "Save", class: 'btn btn-primary', title: "Save plan details"
+  = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

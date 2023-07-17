@@ -1,0 +1,4 @@
+en:
+  series_api:
+    series_list: "Series fetched successfully"
+    no_series: "No series available"

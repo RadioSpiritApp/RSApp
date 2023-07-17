@@ -1,0 +1,39 @@
+!!!
+%html{:class => 'no-js', :lang => 'en'}
+  %head
+    %meta{:charset => 'utf-8'}
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %title Radio Spirits App -- The Best of Classic Radio Now on Your iOS or Android Device
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    / Place favicon.ico in the root directory
+    %link{:rel => "apple-touch-icon", :href => "/assets/apple-touch-icon.png" }
+    = favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png'
+
+    / Google Tag Manager
+    %script{type: 'text/javascript'}
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHNKXBD');
+    / End Google Tag Manager
+
+    / Plugin-CSS
+    / Latest compiled and minified CSS
+    %link{rel: "stylesheet", href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", integrity: "sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin: "anonymous"}
+
+    = stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload'
+
+  %body{ data: {spy: "scroll", target: ".mainmenu-area" } }
+    %noscript
+      %iframe{ src: "https://www.googletagmanager.com/ns.html?id=GTM-WHNKXBD", height: "0", width: "0", style: "display:none;visibility:hidden" }
+    / Preloader-content
+    .preloader
+      %span
+        %i{class: 'lnr lnr-sun'}
+
+    = render 'dashboard/navigation_bar'
+    = yield
+
+    = javascript_include_tag 'dashboard1', 'data-turbolinks-track': 'reload'
+    %script{ src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity: "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin: "anonymous" }

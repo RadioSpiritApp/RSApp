@@ -1,0 +1,7 @@
+:concurrency: 2
+integration:
+  :concurrency: 2
+staging:
+  :concurrency: 2
+production:
+  :concurrency: 5

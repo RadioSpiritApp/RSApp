@@ -1,0 +1,33 @@
+#notifications .dropdown-menu > li > a > div {
+  white-space: initial;
+}
+
+#notifications a:hover{
+  text-decoration: none;
+  color: #262626;
+}
+#notifications li.unread{
+  background-color: #f6f6f6;
+}
+
+#notifications .dropdown-menu li{
+  margin-right: 0px;
+}
+
+#notifications .dropdown-alerts {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 0;
+  cursor: default;
+  background: white;
+}
+
+#notifications .dropdown-alerts li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#notifications .dropdown-alerts li:last-child {
+  border-bottom: 0;
+}

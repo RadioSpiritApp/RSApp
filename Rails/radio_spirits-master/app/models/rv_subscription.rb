@@ -1,0 +1,2 @@
+class RvSubscription < Subscription
+end

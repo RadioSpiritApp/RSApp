@@ -1,0 +1,25 @@
+/ Download-Area-Start
+%section.download-area.section-padding-top#download_page
+  .download-area.overlay
+    .container
+      .row
+        .col-xs-12.col-sm-6.hidden-sm
+          %figure.mobile-image
+            = image_tag 'download-image.png', alt: ''
+
+        .col-xs-12.col-md-6.section-padding
+          %h3.white-color
+            Download The App
+
+          .space-20
+          %p
+            You can now get the Radio Spirits App as a Free download from the Apple App Store or Google Play or your Apple or Android device.
+
+          .space-60
+          %a.bttn-white.sq{ href: "https://apps.apple.com/us/app/radio-spirits/id389211220"}
+            = image_tag 'apple-icon.png', alt: 'apple icon'
+            Apple Store
+          %a.bttn-white.sq{ href: "https://play.google.com/store/apps/details?id=com.radiospirits&hl=en_US" }
+            = image_tag 'play-store-icon.png', alt: 'Play Store Icon'
+            Play Store
+/ Download-Area-End

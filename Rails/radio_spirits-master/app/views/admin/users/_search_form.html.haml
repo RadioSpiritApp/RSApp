@@ -1,0 +1,15 @@
+.col-md-12.no-l-pad
+  = form_tag(search_action, method: :get) do
+    .input-group
+      .form-group.has-feedback.has-clear
+        .col-md-4{style: 'margin-left: -15px;'}
+          = text_field_tag :search_query, params[:search_query], class: "form-control input-md rounded_corners", placeholder: placeholder_text
+        .col-md-4
+          = text_field_tag :date_range, params[:date_range], class: "form-control daterange rounded_corners", placeholder: "Select Date"
+        .col-md-4
+          = select_tag 'user_type', options_for_select([["Free Users", "Free"], ["Registered and Free user", "FreeAndRegistered"], ["Radio Spirits User", "RadioSpirits"], ["Radio Vault User", "RadioVault" ]], selected: params[:user_type] || nil), prompt: "Select User Type", class: 'form-control input-md rounded_corners'
+          
+      .input-group-btn
+        = submit_tag "Search", class: "btn btn-success btn-md rounded_corners", title: "Search records"
+        = link_to "Clear", admin_users_path, class: "btn btn-success btn-md clear-btn rounded_corners", title: "Clear records"
+       

@@ -1,0 +1,5 @@
+en:
+  settings:
+    setting_title: 'Settings'
+    action_success_message: 'Setting was successfully %{message}.'
+    edit_setting: 'Edit Settings'

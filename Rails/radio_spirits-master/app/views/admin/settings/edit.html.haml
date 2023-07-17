@@ -1,0 +1,13 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('settings.edit_setting')
+      .panel-body
+        .col-md-4.col-lg-4.col-sm-12.col-xs-12
+          = form_for @setting, :url => admin_setting_path(@setting), html:{class: 'setting_manager_form'} do |f|
+            .form-group.required
+              = f.label :name, "#{@setting.name.capitalize}"
+              = f.text_field :value, class: "form-control setting-value", placeholder: "Value"
+            = f.submit "Save", class: 'btn btn-primary', title: "Save settings details"
+            = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

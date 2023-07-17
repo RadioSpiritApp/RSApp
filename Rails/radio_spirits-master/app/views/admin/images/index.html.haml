@@ -1,0 +1,41 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        Images
+
+        .pull-right
+          = link_to 'Copy From Remote', copy_image_admin_images_path() , method: :post,  :class => "btn btn-success",  title: "Copy Images From Remote Location"
+          = link_to 'Update From Remote', update_image_admin_images_path() , method: :put,  :class => "btn btn-success  mar-left-10",  title: "Copy Images From Remote Location"
+          = link_to 'Export XLSX', admin_images_path(format: :xlsx) , id: "export_images_link", :class => "btn btn-success  mar-left-10",  title: "Export images"
+          = link_to "", id: "image-bulk-upload", :class => "btn btn-success mar-left-10", "data-toggle" => "modal", "data-target" => "#bulk-upload-image-modal", title: "Upload images" do
+            Upload Images
+      .panel-body
+        .table-responsive
+          - if @images.blank?
+            No images yet
+          - else
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th Image file name
+                  %th Image URL
+                  %th Image
+                  %th Created Date
+                  %th Actions
+              %tbody
+                - @images.each do |image|
+                  %tr
+                    %td= image.full_filename
+                    %td
+                      = link_to image.cf_signed_url(:api_response), target: "blank" do
+                        = image.attachment.file.public_url
+                    %td{style: "width: 116px; height: 116px;"}= image_tag image.attachment_url(:thumb)
+                    %td
+                      = formated_date(image.created_at)
+                    %td
+                      = link_to admin_image_path(image), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm", title: "Delete image" do
+                        %i.fa.fa-trash
+      - if @images.present?
+        = will_paginate @images, class: 'apple_pagination'
+  = render 'image_bulk_upload_modal'

@@ -1,0 +1,101 @@
+= errors_for(episode) if episode.present?
+- url = episode.persisted? ? admin_episode_path(episode) :  admin_episodes_path
+- method_type = episode.persisted? ? "put" : "post"
+= form_for episode, url: url, html: {class: 'create_episode'}, method: method_type do |f|
+  .col-lg-6
+    .col-lg-8
+      .form-group.required
+        = f.label :title
+        = f.text_field :title, class: 'form-control', placeholder: "Episode Title"
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control', placeholder: "Episode Description"
+      .form-group
+        = f.label :rscuepisode_id
+        = f.text_field :rscuepisode_id, class: 'form-control', placeholder: "Episode Rscuepisode id"
+      .form-group
+        = f.label :paid
+        = f.select :paid, options_for_select([['True', true], ['False', false]], selected: episode.persisted? ? episode.paid : true), {}, {class: 'form-control input-md'}
+      .form-group
+        = f.label :available
+        = f.select :available, options_for_select([['True', true], ['False', false]], selected: episode.available), {}, {class: 'form-control input-md'}
+      .form-group
+        = f.label :featured
+        = f.select :featured, options_for_select([['False', false], ['True', true]], selected: episode.featured), {}, {class: 'form-control input-md'}
+      .form-group.required.duration_inputs{style: "display: #{(episode.persisted? && episode.paid == false) ? 'block' : 'none'}"}
+        = f.label :begin_duration
+        = f.text_field :begin_duration, value: Time.at(episode.begin_duration.to_f).utc.strftime('%H:%M:%S'), class: 'form-control', placeholder: "Begin Time in HH:MM:SS format"
+      .form-group.required.duration_inputs{style: "display: #{(episode.persisted? && episode.paid == false) ? 'block' : 'none'}"}
+        = f.label :end_duration
+        = f.text_field :end_duration, value: Time.at(episode.end_duration.to_f).utc.strftime('%H:%M:%S'), class: 'form-control', placeholder: "End Time in HH:MM:SS format"
+  .col-lg-6
+    .col-lg-8
+      .form-group.required
+        = f.label :release_date
+        = f.text_field :play_date, value: episode.persisted? ? formated_date(episode.play_date)  : formated_date(Date.today), class: "datepicker form-control"
+      .form-group.required
+        = f.label :original_air_date
+        = f.text_field :original_air_date, value: episode.persisted? ? formated_date(episode.original_air_date) : formated_date(Date.today), class: "datepicker form-control"
+      .form-group.required
+        = f.label :series
+        = f.select :series_id, options_for_select(series_list, selected: episode&.series_id), {include_blank: "Select series"}, {class: 'form-control input-md'}
+      .form-group
+        = f.fields_for :image_attributes, episode.image do |image|
+          = image.label :upload_image
+          %button#image_alt.form-control.image-choose-file-button Choose file
+          %span#selected_image_name.truncate
+            = image_attached?(episode) ? image_file_name(episode) : "No file choosen"
+          = image.file_field :attachment, accept:'image/*',class: 'form-control photoInput upload_selected_image_or_audio hide'
+      .form-group.image_file_name
+        - if image_attached?(episode)
+          = link_to admin_image_path(episode.image, return_to: 'episodes'), method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete image" do
+            %span.delete_image
+              X
+          = image_tag image_attached_url(episode)
+      .form-group
+        = f.fields_for :audio_attributes, episode.audio do |audio|
+          = audio.label :upload_audio
+          %button#audio_alt.form-control.image-choose-file-button Choose file
+          %span#selected_image_name.truncate
+            = audio_attached?(episode) ? audio_file_name(episode) : "No file choosen"
+          = audio.file_field :attachment, onchange: 'setFileInfo(this.files)',accept:'audio/*',class: 'form-control ep_audio_input upload_selected_image_or_audio hide'
+      = f.hidden_field :duration, value: episode.duration.present? ? episode.duration : ''
+      .form-group.audio_file_name
+        - if audio_attached?(episode)
+          %audio#sound{:controls => "", :src => episode.audio.cf_signed_url, :type => "audio/mp3"}
+            Your browser does not support the audio element.
+        - else
+          %audio#sound{:controls => "", :src => "", :type => "audio/mp3"}
+            Your browser does not support the audio element.
+
+  .col-lg-12.col-md-12.col-sm-12
+    .actions.pull-right
+      = f.submit 'Save', class: 'btn btn-primary', title: "Save episode details"
+      = link_to 'Back', admin_episodes_path, class: 'btn btn-default mar-l-10', title: "Go back to previous page"
+:javascript
+  myVideos = []
+  function setFileInfo(files) {
+    if(((/\.mp3$/i).test(files[0].name.toLowerCase()))){
+      myVideos.push(files[0]);
+      var video = document.createElement('video');
+      video.preload = 'metadata';
+      video.onloadedmetadata = function() {
+        window.URL.revokeObjectURL(this.src)
+        var duration = video.duration;
+        myVideos[myVideos.length-1].duration = duration;
+        updateInfos();
+      }
+      video.src = URL.createObjectURL(files[0]);;
+    }
+    else{
+      openAlertBox("Please select a video!(.mp3)");
+      $("#video1").val("");
+    }
+  }
+
+  function updateInfos(){
+    document.getElementById("episode_duration").value = ""
+    for(i=0;i<myVideos.length;i++){
+      document.getElementById("episode_duration").value = myVideos[i].duration;
+    }
+  }

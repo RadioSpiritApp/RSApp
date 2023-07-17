@@ -1,0 +1,26 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading Subscribers
+      .panel-body
+        .x-scrolling-wrapper
+          Work in progress
+          -# - if @subscribers.blank?
+            No subscribers yet
+          -# - else
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th.list_id_column #
+                  %th Email
+                  %th First Name
+                  %th Last Name
+              %tbody
+                - @subscribers.each do |subscriber|
+                  %tr
+                    %td= subscriber.id
+                    %td= subscriber.email
+                    %td= subscriber.first_name
+                    %td= subscriber.last_name
+      -# - if @subscribers.present?
+        = will_paginate @subscribers, :class => "apple_pagination"

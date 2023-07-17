@@ -1,0 +1,24 @@
+= errors_for(genre) if genre.present?
+- url = genre.persisted? ? admin_genre_path(genre) :  admin_genres_path
+- method_type = genre.persisted? ? "put" : "post"
+= form_for genre, url: url, html: {class: 'create_genre'}, method: method_type do |f|
+  .col-lg-6
+    .col-lg-8
+      .form-group.required
+        = f.label :title
+        = f.text_field :title, class: 'form-control', placeholder: " Genre title"
+      .form-group
+        = f.label :available
+        = f.select :available, options_for_select([['True', true], ['False', false]], selected: genre.available), {}, {class: 'form-control input-md'}
+      .form-group
+        = f.fields_for :image_attributes, genre.image do |image|
+          = image.label :upload_image
+          %button#image_alt.form-control.image-choose-file-button Choose file
+          %span#selected_image_name.truncate
+            = image_attached?(genre) ? image_file_name(genre) : "No file choosen"
+          = image.file_field :attachment, accept:'image/*',class: 'form-control photoInput upload_selected_image_or_audio hide ' 
+      .form-group.image_file_name
+        = image_tag image_attached_url(genre) if image_attached?(genre)
+      .actions
+        = f.submit 'Save', class: 'btn btn-primary', title: "Save genre details"
+        = link_to 'Back', admin_genres_path, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

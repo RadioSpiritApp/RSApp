@@ -1,0 +1,52 @@
+/*
+ *= require_self
+ *= require bootstrap.min
+ *= require pagination
+ *= require util
+ *= require select2
+ *= require bootstrap-datepicker
+ *= require daterangepicker
+ */
+.form-group.required label:after {
+   content:"*";
+   color:red;
+}
+
+#file-upload-modal .back-popup{
+  font-size: 28px;
+  cursor: pointer;
+}
+.button-align {
+	white-space:nowrap;
+}
+
+.truncate{
+	display: inline-block;
+	max-width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.image-choose-file-button{
+	width: 50% !important; 
+}
+
+a[aria-expanded=true] .fa.fa-plus {
+   display: none;
+}
+a[aria-expanded=false] .fa.fa-minus {
+   display: none;
+}
+
+
+.break-text {
+	word-wrap: break-word;
+	min-width: 200px;
+	max-width: 180px;
+}
+
+.clear-btn {
+	margin-left: 5px !important;
+	padding-top: 12px !important;
+}

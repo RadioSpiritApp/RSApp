@@ -1,0 +1,5 @@
+en:
+  images:
+    image_title: 'Image'
+    image_message: "Image was successfully %{message}."
+    not_destroy: "Image was not destroyed"

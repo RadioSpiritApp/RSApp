@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Uploaded Audios-#{Date.today}") do |sheet|
+  sheet.add_row(CsvExporter.audio_export_headers)
+  @audios.each_with_index do |audio, index|
+    sheet.add_row([index+1, audio.full_filename, audio.cf_signed_url])
+  end
+end

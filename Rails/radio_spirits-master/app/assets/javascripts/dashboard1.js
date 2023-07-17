@@ -1,0 +1,9 @@
+//= require jquery-1.12.4.min
+//= require jquery-ui
+//= require owl.carousel.min
+//= require contact-form
+//= require ajaxchimp
+//= require scrollUp.min
+//= require magnific-popup.min
+//= require wow.min
+//= require main

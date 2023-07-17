@@ -1,0 +1,2 @@
+class RsSubscription < Subscription
+end

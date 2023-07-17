@@ -1,0 +1,44 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('settings.setting_title')
+      .panel-body
+        .x-scrolling-wrapper
+          - if @settings.blank?
+            No record yet
+          - else
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th.list_id_column.text-center{style: "width: 5%"} #
+                  %th Name
+                  %th.text-center Value
+                  %th.text-center Actions
+              %tbody
+                - sr_no = 0
+                - @settings.each do |setting|
+                  %tr
+                    %td.text-center= sr_no+= 1
+                    %td= truncate(setting.name.capitalize)
+                    %td.text-center= setting.value
+                    %td.text-center
+                      = link_to edit_admin_setting_path(setting), class: "btn btn-sm btn-info", title: "Edit settings" do
+                        %i.fa.fa-edit
+                %tr
+                  %td.text-center= sr_no+= 1
+                  %td Home page content
+                  %td
+                  %td.text-center
+                    = link_to admin_edit_home_page_content_path, class: "btn btn-sm btn-info", title: "Edit home page settings" do
+                      %i.fa.fa-edit
+                %tr
+                  %td.text-center= sr_no+= 1
+                  %td Configure page text
+                  %td
+                  %td.text-center
+                    = link_to admin_copy_texts_path, class: "btn btn-sm btn-info", title: "View copy text details" do
+                      View
+
+      - if @settings.present?
+        = will_paginate @settings, :class => "apple_pagination"

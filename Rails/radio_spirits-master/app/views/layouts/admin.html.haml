@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %title RadioSpirits
+    = csrf_meta_tags
+    = favicon_link_tag asset_path('favicon.png'), :rel => 'icon', :type =>  'image/png'
+    = csp_meta_tag
+    = stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'admin', 'data-turbolinks-track': 'reload'
+    %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}
+  %body
+    = render 'shared/navbar'
+    - if current_user&.admin?
+      = render 'shared/sidebar'
+    .col-sm-9.col-sm-offset-3.col-lg-10.col-lg-offset-2.main
+      .row.flash_messages_div
+        = bootstrap_flash
+      = yield

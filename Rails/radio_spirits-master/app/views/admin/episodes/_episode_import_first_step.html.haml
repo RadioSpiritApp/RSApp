@@ -1,0 +1,15 @@
+#episode-import-first-step.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.text-center
+          Import your episodes from a XLSX
+      .modal-body        
+        .mar-top-20
+          To get started, please download the example template. You'll be able to open it in any spreadsheet application, such as Microsoft Excel or Apple Numbers.
+        .m-t-30.m-b-10          
+          = link_to "Download", downlaod_sample_csv_admin_episodes_path(format: :csv), id: "download_sample_csv", title: "Download", :class => "btn btn-info"
+          = link_to "javascript:void(0)", id: "continue_to_upload_csv_form", title: "Continue", :class => "btn btn-primary pull-right" do
+            Continue

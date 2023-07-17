@@ -1,0 +1,8 @@
+en:
+  ads:
+    ad_title: 'Advertisement'
+    action_success_message: "Advertisement was successfully %{message}."
+    not_destroy: "Advertisement was not destroyed"
+    add_new: 'Add Advertisement'
+    new_ad: 'New Advertisement'
+    edit_ad: "Edit Advertisement"

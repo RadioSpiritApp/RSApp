@@ -1,0 +1,12 @@
+#progressPage.modal.fade{:role => "dialog", "data-backdrop" => "static", "data-keyboard" => "false"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.text-center
+          Upload is in process
+      .modal-body
+        %h3.text-center Uploading...
+        .progress.progress-striped.active.progress-sm.mar-top-40#episode_upload_progress_bar
+          .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "0", :role => "progressbar", :style => "width: 100%"}
+        #upload_message_div.mar-top-30.mar-bottom-40
+          

@@ -1,0 +1,10 @@
+en:
+  episodes_api:
+    episodes_list: "Episodes fetched successfully"
+    no_episodes: "No episodes available"
+    not_accessible: "Something went wrong. Please try later"
+    increment_stream_count: "Episode stream count successfully incremented!"
+    episode_bookmark: "Episode is bookmarked successfully."
+    episode_not_bookmarked: "Episode is not bookmarked!"
+    subscription_expire: "Please purchase the subscription!"
+    bookmark_time_exceed: "Bookmark discarded. Less than 60 seconds remaining"

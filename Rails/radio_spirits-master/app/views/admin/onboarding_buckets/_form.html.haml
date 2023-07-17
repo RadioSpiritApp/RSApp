@@ -1,0 +1,43 @@
+= form_for :onboarding_bucket, :url => {:controller => 'onboarding_buckets', :action => onboarding_bucket.persisted? ? 'update' : 'create'}, html:{class: 'onboarding_bucket_form'}, method:  onboarding_bucket.persisted? ? 'PUT' : 'POST' do |f|
+  .form-group.required
+    = f.label :title
+    = f.text_field :title, class: "form-control", placeholder: "Title"
+  .form-group.required
+    = f.label :show_signup_after, "Show signup form after (number of days)"
+    = f.text_field :show_signup_after, class: "form-control", placeholder: "Number of days signup form will not appear"
+  .form-group.required
+    = f.label :skip_signup_for, "Skip signup process (number of days)"
+    = f.text_field :skip_signup_for, class: "form-control", placeholder: "Number of days user can skip signup"
+  .form-group.required
+    = f.label :weight, "Weight for bucket"
+    = f.text_field :weight, class: "form-control", placeholder: "Weight for bucket"
+  .form-group
+    = f.label :show_signup, "Show e-mail field?"
+    .radio
+      %label
+        = f.radio_button :show_signup, true, :checked => true
+        Yes
+      %label
+        = f.radio_button :show_signup, false
+        No
+  .form-group
+    = f.label :show_rv_login, "Show RadioVault login?"
+    .radio
+      %label
+        = f.radio_button :show_rv_login, true, :checked => true
+        Yes
+      %label
+        = f.radio_button :show_rv_login, false
+        No
+  - if onboarding_bucket.persisted?
+    .form-group
+      = f.label :active, "Is active?"
+      .radio
+        %label
+          = f.radio_button :active, true
+          Yes
+        %label
+          = f.radio_button :active, false
+          No
+  = f.submit "Save", class: 'btn btn-primary', title: "Save onboarding bucket details"
+  = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

@@ -1,0 +1,5 @@
+en:
+  copy_texts:
+    copy_text_title: 'Copy Text'
+    action_success_message: 'Copy Text was successfully %{message}.'
+    edit_copy_text: 'Edit Copy Text'

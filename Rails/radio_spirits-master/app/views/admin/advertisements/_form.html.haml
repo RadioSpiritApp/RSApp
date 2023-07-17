@@ -1,0 +1,72 @@
+= form_for :advertisement, :url => {:controller => 'advertisements', :action => advertisement.persisted? ? 'update' : 'create'}, html:{class: 'ad_manager_form'}, method:  advertisement.persisted? ? 'PUT' : 'POST' do |f|
+  .form-group.required
+    = f.label :title
+    = f.text_field :title, class: "form-control", placeholder: "Title"
+  .form-group.required
+    = f.label :ad_type, "Type"
+    = f.select :ad_type, [["Image", "image"], ["Audio", "audio"]], {prompt: "Select Type"}, {class: "form-control"}
+  .form-group.required
+    = f.label :redirect_url, "Redirect URL"
+    = f.text_field :redirect_url, class: "form-control", placeholder: "Redirect URL"
+  .form-group.image_upload.required{style: "display: #{advertisement.ad_type == "image" ? 'block' : 'none'}"}
+    = f.fields_for :image_attributes do |image|
+      = image.label :upload_image
+      %button#image_alt.form-control.image-choose-file-button Choose file
+      %span#selected_image_name.truncate
+        = image_attached?(advertisement) ? image_file_name(advertisement) : "No file choosen"
+      - if @advertisement.persisted?
+        = image.file_field :attachment, accept:'image/*',class: "form-control photoInput #{advertisement.ad_type == 'image' ? 'upload_selected_image_or_audio' : ''}  hide"
+      - else
+        = image.file_field :attachment, accept:'image/*',class: 'form-control photoInput  upload_selected_image_or_audio hide'
+  .form-group.image_file_name
+    - if image_attached?(advertisement)
+      = image_tag(image_attached_url(advertisement))
+  .form-group.audio_upload{style: "display: #{advertisement.ad_type == "audio" ? 'block' : 'none'}"}
+    = f.fields_for :audio_attributes do |audio|
+      = audio.label :upload_audio
+      %button#audio_alt.form-control.image-choose-file-button Choose file
+      %span#selected_image_name.truncate
+        = audio_attached?(advertisement) ? audio_file_name(advertisement) : "No file choosen"
+      - if @advertisement.persisted?
+        = audio.file_field :attachment, accept:'audio/*',class: "form-control ad_audio_input  #{advertisement.ad_type == 'audio' ? 'upload_selected_image_or_audio' : ' '} hide", onchange: 'setFileInfo(this.files)'
+      - else
+        = audio.file_field :attachment, accept:'audio/*',class: 'form-control ad_audio_input  upload_selected_image_or_audio hide', onchange: 'setFileInfo(this.files)'
+
+    = f.hidden_field :duration, value: advertisement.duration.present? ? advertisement.duration : ''
+  .form-group.audio_file_name{style: "display: #{advertisement.ad_type == "audio" ? 'block' : 'none'}"}
+    - if advertisement.audio.present?
+      %audio#sound{:controls => "", :src => advertisement.audio.cf_signed_url, :type => "audio/mp3"}
+        Your browser does not support the audio element.
+    - else
+      %audio#sound{:controls => "", :src => "", :type => "audio/mp3"}
+        Your browser does not support the audio element.
+
+  = f.submit "Save", class: 'btn btn-primary', title: "Save advertisement details"
+  = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"
+:javascript
+  myVideos = []
+  function setFileInfo(files) {
+    if(((/\.mp3$/i).test(files[0].name.toLowerCase()))){
+      myVideos.push(files[0]);
+      var video = document.createElement('video');
+      video.preload = 'metadata';
+      video.onloadedmetadata = function() {
+        window.URL.revokeObjectURL(this.src)
+        var duration = video.duration;
+        myVideos[myVideos.length-1].duration = duration;
+        updateInfos();
+      }
+      video.src = URL.createObjectURL(files[0]);;
+    }
+    else{
+      openAlertBox("Please select a video!(.mp3)");
+      $("#video1").val("");
+    }
+  }
+
+  function updateInfos(){
+    document.getElementById("advertisement_duration").value = ""
+    for(i=0;i<myVideos.length;i++){
+      document.getElementById("advertisement_duration").value = myVideos[i].duration;
+    }
+  }

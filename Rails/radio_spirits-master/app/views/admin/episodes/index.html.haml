@@ -1,0 +1,65 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = csrf_meta_tags
+        Episodes listing
+        = link_to "Add Episode", new_admin_episode_path, class: 'btn btn-success btn-sm pull-right m-l-20'
+        = link_to "Upload Episode XLSX", "", class: 'btn btn-success btn-sm pull-right m-l-20', "data-toggle" => "modal", "data-target" => "#episode-import-first-step"
+      .panel-body
+        .col-md-12.m-b-10
+          = render 'shared/search_form', search_action: admin_episodes_path, placeholder_text: "Search by episodes title and series title"
+        .col-md-12
+          .table-responsive
+            - if @episodes.blank?
+              No episodes yet
+            - else
+              %table.table.table-bordered.table-hover.table-striped
+                %thead
+                  %tr
+                    %th.list_id_column.text-center ID
+                    %th Title
+                    %th Series Title
+                    %th.text-center Available
+                    %th.text-center Paid
+                    %th.text-center Featured
+                    %th.text-center Play date
+                    %th.text-center Original air date
+                    %th.text-center Rscuepisode Id
+                    %th.text-center Image
+                    %th.text-center Audio
+                    %th.text-center Duration
+                    %th.text-center Actions
+                %tbody
+                  - @episodes.each_with_index do |episode|
+                    %tr
+                      %td.text-center= episode.id
+                      %td{title: episode.title}= truncate(episode.title)
+                      %td= episode&.series&.title
+                      %td.text-center{class: episode.available? ? 'text-success' : 'text-danger'}= episode.available? ? 'Yes' : 'No'
+                      %td.text-center{class: episode.paid? ? 'text-success' : 'text-danger'}= episode.paid? ? 'Yes' : 'No'
+                      %td.text-center{class: episode.featured? ? 'text-success' : 'text-danger'}= episode.featured? ? 'Yes' : 'No'
+                      %td.text-center= formated_date(episode.play_date)
+                      %td.text-center= formated_date(episode.original_air_date)
+                      %td.text-center= episode&.rscuepisode_id
+                      %td.text-center{style: "width: 116px; height: 116px;"}= episode.image.present? ? image_tag(image_attached_url(episode)) : (episode.series.image.present? ? image_tag(image_attached_url(episode.series)) : 'N/A')
+                      %td.text-center{title: audio_file_name(episode)}
+                        - if audio_attached?(episode)
+                          = link_to episode.audio.cf_signed_url, target: "blank" do
+                            = truncate(audio_file_name(episode))
+                        -else
+                          = 'N/A'
+                      %td.text-center= format_duration_time(episode.duration)
+                      %td.text-center.button-align
+                        = link_to edit_admin_episode_path(episode), class: "btn btn-info btn-sm #{episode.series.available? ? '' : 'disabled'}", title: "Edit episode" do
+                          %i.fa.fa-edit
+                        = link_to admin_episode_path(episode), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger mar-l-10 btn-sm", title: "Delete episode" do
+                          %i.fa.fa-trash
+                        = link_to admin_episode_activate_deactivate_path(episode), method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-sm mar-l-10 #{episode.available? ? 'btn-warning' : 'btn-info'} #{episode.series.available? ? '' : 'disabled'}", title: "#{episode.available? ? 'Suspend' : 'Activate'} episode" do
+                          %i{class:  episode.available? ? 'fa fa-lock' : 'fa fa-unlock-alt'}
+
+      - if @episodes.present?
+        = will_paginate @episodes, class: 'apple_pagination'
+= render "episode_import_first_step"
+= render "file_upload_modal"
+= render "progress_page"

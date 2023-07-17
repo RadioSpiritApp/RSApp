@@ -1,0 +1,79 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('users.users_title')
+      .panel-body
+        .col-md-12.m-b-10
+          = render 'search_form', search_action: admin_users_path, placeholder_text: "Search By User Email or Reference Id"
+        .col-md-12
+          .table-responsive
+            - if @results.blank?
+              No record yet
+            - else
+              %table.table.table-bordered
+                %thead
+                  %tr
+                    %th.text-center ID
+                    %th Email
+                    %th.text-center{style: 'width: 16%;'} Installation date
+                    %th.text-center{style: 'width: 14%;'} Subscription date
+                    %th{style: 'width: 14%'} Onboarding bucket
+                    %th{style: 'width: 14%'} Subscription bucket
+                    %th{style: 'width: 14%'} Plan selected
+                    %th{style: 'width: 14%;'} Platform
+                    %th{style: 'width: 14%;'} Reference ID
+                    %th.text-center Actions
+                %tbody
+                  - @results.each do |user_id, devices_users|
+                    - if user_id.nil?
+                      - devices_users.each do |device_user|
+                        - device = Device.find(device_user["device_id"]) rescue nil
+                        - user = User.find(device_user["users_id"]) if device.nil?
+                        - access_token = AccessToken.where(device_id: device.id, user_id: user.id).first if device.present? && user.present?
+                        - next if user && user.admin?
+                        %tr
+                          %td.text-center= user.present? ? user.id : 'N/A'
+                          %td= user.present? ? user.email : 'N/A'
+                          %td.text-center{style: 'width: 16%;'}= device.present? ? formated_date(device.created_at) : 'N/A'
+                          %td.text-center{style: 'width: 14%;'}= user.present? ? formated_date(user.subscriptions&.last&.created_at)  : 'N/A'
+                          %td{style: 'width: 14%;'}= device.present? ? device.onboarding_bucket.title : "-"
+                          %td{style: 'width: 14%;'}= device.present? ? device.subscription_bucket.title : "-"
+                          %td{style: 'width: 14%;'}= get_plan_for(user, device)
+                          %td{style: 'width: 14%;'}
+                            - if device.present?
+                              = (device.device_type.downcase == "ios") ? 'iOS' : device.device_type.titleize
+                            - else
+                              = "N/A"
+                          %td{style: 'width: 14%;'}= device&.reference_id || 'N/A'
+                          %td.text-center
+                            - if (user.present?)
+                              = link_to admin_user_suspend_or_activate_path(user.id), class: "btn btn-sm #{user.suspended? ? 'btn-info' : 'btn-warning'}", method: :post, title: "#{user.suspended? ? 'Activate' : 'Suspend'} user" do
+                                %i{class:  user.suspended? ? 'fa fa-unlock-alt' : 'fa fa-lock'}
+                    - else
+                      - user = User.find(user_id) rescue nil
+                      - user.devices.each_with_index do |device, index|
+                        - access_token = AccessToken.where(device_id: device.id, user_id: user.id).first if device.present? && user.present?
+                        %tr
+                          %td.text-center{class: "#{(index != 0 && user_id.present?) ? 'no-t-border' : ''}"}
+                            - if ((index == 0) || (user_id.nil?))
+                              = user_id || 'N/A'
+                          %td{class: "#{(index != 0 && user_id.present?) ? 'no-t-border' : ''}"}
+                            - if ((index == 0) || (user_id.nil?))
+                              = (user && user.email.present?) ? user.email : 'N/A'
+                          %td.text-center{style: 'width: 16%;'}= formated_date(device.created_at)
+                          %td.text-center{style: 'width: 14%;'}= user.present? ? formated_date(user.subscriptions&.last&.created_at)  : 'N/A'
+                          %td{style: 'width: 14%;'}= device.onboarding_bucket.title
+                          %td{style: 'width: 14%;'}= device.subscription_bucket.title
+                          %td{style: 'width: 14%;'}= get_plan_for(user, device)
+                          %td{style: 'width: 14%;'}
+                            = (device.device_type.downcase == "ios") ? 'iOS' : device.device_type.titleize
+                          %td{style: 'width: 14%;'}= device&.reference_id
+                          %td.text-center{class: "#{(index != 0 && user_id.present?) ? 'no-t-border' : ''}"}
+                            - if ((index == 0) && (user_id.present?))
+                              = link_to admin_user_suspend_or_activate_path(user_id), class: "btn btn-sm #{user.suspended? ? 'btn-info' : 'btn-warning'}", method: :post, title: "#{user.suspended? ? 'Activate' : 'Suspend'} user" do
+                                %i{class:  user.suspended? ? 'fa fa-unlock-alt' : 'fa fa-lock'}
+              %label Note:
+              Suspend button will not appear for devices where user is not registered.
+            - if @result_keys.present?
+              = will_paginate @result_keys, :class => "apple_pagination"

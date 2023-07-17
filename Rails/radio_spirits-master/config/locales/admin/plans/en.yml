@@ -1,0 +1,8 @@
+en:
+  plans:
+    plan_title: 'Plan'
+    add_plan: 'Add Plan'
+    new_plan: 'New Plan'
+    action_success_message: 'Plan was successfully %{message}.'
+    destroy_failure: 'Plan was not destroyed'
+    edit_plan: "Edit Plan"

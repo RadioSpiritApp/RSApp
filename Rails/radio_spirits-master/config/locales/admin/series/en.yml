@@ -1,0 +1,5 @@
+en:
+  series:
+    series_title: 'Series'
+    series_message: 'Series was successfully %{message}'
+    not_destroy: "Series was not destroyed"

@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Uploaded Images-#{Date.today}") do |sheet|
+  sheet.add_row(CsvExporter.image_export_headers)
+  @images.each_with_index do |image, index|
+    sheet.add_row([index+1, image.full_filename, image.cf_signed_url])
+  end
+end

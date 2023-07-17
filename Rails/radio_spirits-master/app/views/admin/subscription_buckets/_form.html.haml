@@ -1,0 +1,22 @@
+= form_for :subscription_bucket, :url => {:controller => 'subscription_buckets', :action => subscription_bucket.persisted? ? 'update' : 'create'}, html:{class: 'subscription_bucket_form'}, method:  subscription_bucket.persisted? ? 'PUT' : 'POST' do |f|
+  .form-group.required
+    = f.label :title
+    = f.text_field :title, class: "form-control", placeholder: "Title"
+    = f.label :weight
+    = f.text_field :weight, class: "form-control", placeholder: "Weight"
+    = f.fields_for :subscription_bucket_plans do |bucket_plan|
+      .form-group.required
+        = f.label :plans
+        = f.collection_select(:plan_ids, Plan.active, :id, :title, {prompt: true}, {multiple: true, class: "form-control", "data-placeholder" => 'Select Plans', required: true})
+  - if subscription_bucket.persisted?
+    .form-group
+      = f.label :active, "Is active?"
+      .radio
+        %label
+          = f.radio_button :active, true
+          Yes
+        %label
+          = f.radio_button :active, false
+          No
+  = f.submit "Save", class: 'btn btn-primary', title: "Save subscription bucket details"
+  = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

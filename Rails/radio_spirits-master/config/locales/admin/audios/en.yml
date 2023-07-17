@@ -1,0 +1,5 @@
+en:
+  audios:
+    audio_title: 'Audio'
+    audio_message: "Audio was successfully %{message}."
+    not_destroy: "Audio was not destroyed"

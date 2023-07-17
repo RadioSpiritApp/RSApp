@@ -1,0 +1,51 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        Audios
+
+        .pull-right
+          = link_to 'Copy From Remote', copy_audio_admin_audios_path() , method: :post,  :class => "btn btn-success",  title: "Copy Images From Remote Location"
+          = link_to 'Update From Remote', update_audio_admin_audios_path() , method: :put,  :class => "btn btn-success  mar-left-10",  title: "Copy Images From Remote Location"
+          = link_to 'Export XLSX', admin_audios_path(format: :xlsx), id: "export_audios_link", :class => "btn btn-success", title: "Export audios"
+          = link_to "", id: "audio-bulk-upload", :class => "btn btn-success mar-left-10", "data-toggle" => "modal", "data-target" => "#bulk-upload-audio-modal", title: "Upload audios" do
+            Upload Audios
+      .panel-body
+        .table-responsive
+          - if @audios.blank?
+            No audios yet
+          - else
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th Audio file name
+                  %th Episode
+                  %th Audio URL
+                  %th Created Date
+                  %th Player
+                  %th.text-center Actions
+              %tbody
+                - @audios.each do |audio|
+                  %tr
+                    %td= audio.full_filename
+                    %td
+                      - if audio.episodes.present?
+                        - audio.episodes.order(:id).each_with_index do |ep, ep_index|
+                          %br
+                          = "#{ep_index + 1}. #{ep.title}"
+                      - else
+                        N/A
+                    %td
+                      = link_to audio.cf_signed_url, target: "blank" do
+                        = audio.attachment.file.public_url
+                    %td
+                      = formated_date(audio.created_at)
+                    %td
+                      %audio#sound{:controls => "", :src => audio.cf_signed_url, :type => "audio/mp3"}
+                        Your browser does not support the audio element.
+                    %td.text-center
+                      = link_to admin_audio_path(audio), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm", title: "Delete audio" do
+                        %i.fa.fa-trash
+      - if @audios.present?
+        = will_paginate @audios, class: 'apple_pagination'
+  = render 'bulk_upload_modal'

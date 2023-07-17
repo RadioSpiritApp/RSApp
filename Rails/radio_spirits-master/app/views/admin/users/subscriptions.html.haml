@@ -1,0 +1,39 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('users.users_title')
+      .panel-body
+        .col-md-12.m-b-10          
+          = render 'search_subscriptions', search_action: subscriptions_admin_users_path, placeholder_text: "Search By User Email"
+        .col-md-12
+          .table-responsive
+            - if @subscriptions.blank?
+              No record yet
+            - else
+              %table.table.table-bordered
+                %thead
+                  %tr
+                    %th.text-center ID
+                    %th Email
+                    %th.text-center{style: 'width: 14%;'} Created At
+                    %th.text-center{style: 'width: 16%;'} Expiry date
+                    %th.text-center{style: 'width: 14%;'} Type
+                    %th{style: 'width: 14%;'} Plan
+                    %th.text-center{style: 'width: 14%;'} Platform
+                %tbody
+                  - @subscriptions.each do |user, subscriptions|
+                    - subscriptions.each_with_index do |subscription, index|
+                      %tr
+                        %td.text-center{class: "#{(index != 0) ? 'no-t-border' : ''}"}=(index== 0) ? (subscription.user.id.presence || 'N/A') : ''
+                        %td{class: "#{(index != 0) ? 'no-t-border' : ''}"}=(index== 0) ? (subscription.user.email.presence || subscription.transaction_identifier) : ''
+                        %td.text-center= subscription.type == Subscription::RS ? formated_date(subscription.created_at) : "-"
+                        %td.text-center= formated_date(subscription.expiry_date)
+                        %td.text-center= subscription.type == Subscription::RS ? "Radio Spirits" : "Radio Vault"
+                        %td= subscription&.plan&.title.presence || "Radio Vault"
+                        %td.text-center= subscription.platform&.downcase == "ios" ? "iOS" : subscription.platform&.titleize
+          - if @results.present?
+            = will_paginate @results, :class => "apple_pagination"
+
+
+

@@ -1,0 +1,2 @@
+class CopyText < ApplicationRecord
+end

@@ -1,0 +1,7 @@
+en:
+  genres:
+    genre_title: 'Genre'
+    genre_message: "Genre was successfully %{message}."
+    not_destroy: "Genere was not destroyed"
+    new_genre: "New Genre"
+    edit_genre: "Edit Genre"

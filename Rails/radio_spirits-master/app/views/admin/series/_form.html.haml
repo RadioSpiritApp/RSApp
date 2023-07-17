@@ -1,0 +1,33 @@
+= errors_for(series) if series.present?
+- url = series.persisted? ? admin_series_path(series) :  admin_series_index_path
+- method_type = series.persisted? ? "put" : "post"
+= form_for series, url: url, html: {class: 'create_series', multipart: true}, method: method_type do |f|
+  .col-lg-6
+    .col-lg-8
+      .form-group.required
+        = f.label :title
+        = f.text_field :title, class: 'form-control', placeholder: "Series title"
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control', placeholder: "Series description"
+      .form-group
+        = f.label :available
+        = f.select :available, options_for_select([['True', true], ['False', false]], selected: series.available), {}, {class: 'form-control input-md'}
+      .form-group
+        = f.label :featured
+        = f.select :featured, options_for_select([['False', false], ['True', true]], selected: series.featured), {}, {class: 'form-control input-md'}
+      .form-group
+        = f.fields_for :image_attributes, series.image do |image|
+          = image.label :upload_image
+          %button#image_alt.form-control.image-choose-file-button Choose file
+          %span#selected_image_name.truncate
+            = image_attached?(series) ? image_file_name(series) : "No file choosen"
+          = image.file_field :attachment, accept:'image/*',class: 'form-control photoInput upload_selected_image_or_audio hide'
+      .form-group.image_file_name
+        = image_tag image_attached_url(series) if image_attached?(series)
+      .form-group.required
+        = f.label :Genres
+        = f.collection_select(:genre_ids, Genre.available, :id, :title, {prompt: true}, {multiple: true, class: "form-control", "data-placeholder" => 'Select genres'})
+      .actions
+        = f.submit 'Save', class: 'btn btn-primary', title: "Save series details"
+        = link_to 'Back', admin_series_index_path, class: 'btn btn-default mar-l-10', title: "Go back to previous page"

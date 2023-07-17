@@ -1,0 +1,46 @@
+.row
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('ads.ad_title')
+        = link_to t('ads.add_new'), new_admin_advertisement_path, class: "btn btn-success btn-sm pull-right", title: "Click to add new advertisment"
+      .panel-body
+        .col-md-12.m-b-10
+          = render 'shared/search_form', search_action: admin_advertisements_path, placeholder_text: "Search advertisement title"
+        .x-scrolling-wrapper.col-md-12
+          - if @advertisements.blank?
+            No record yet
+          - else
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th.list_id_column.text-center{style: "width: 5%"} #
+                  %th Title
+                  %th.text-center Type
+                  %th.text-center Status
+                  %th Media
+                  %th.text-center Actions
+              %tbody
+                - @advertisements.each_with_index do |ad, index|
+                  %tr
+                    %td.text-center= (params[:page].present? ? (params[:page].to_i - 1) * 20 : 0) + index + 1
+                    %td{title: ad.title}= truncate(ad.title)
+                    %td.text-center= ad.ad_type.titleize
+                    %td.text-center{class: ad.active? ? 'text-success' : 'text-danger'}= ad.active? ? 'Active' : 'Suspended'
+                    - if ad.image.present?
+                      %td{style: "width: 116px; height: 116px;"}
+                        = image_tag(ad.image.cf_signed_url(:thumb))
+                    - else
+                      %td
+                        = ad&.audio&.attachment&.file&.filename
+                    %td.text-center
+                      = link_to edit_admin_advertisement_path(ad), class: "btn btn-sm btn-info", title: "Edit advertisement" do
+                        %i.fa.fa-edit
+                      = link_to admin_advertisement_path(ad), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger mar-l-10", title: "Delete advertisement" do
+                        %i.fa.fa-trash
+
+                      = link_to admin_advertisement_activate_deactivate_path(ad), method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-sm mar-l-10 #{ad.active ? 'btn-warning' : 'btn-info'}",title: "#{ad.active ? 'Suspend' : 'Activate'} advertisement" do
+                        %i{class:  ad.active ? 'fa fa-lock' : 'fa fa-unlock-alt'}                      
+      - if @ads.present?
+        = will_paginate @ads, :class => "apple_pagination"

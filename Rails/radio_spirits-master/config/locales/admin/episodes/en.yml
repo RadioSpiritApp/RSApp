@@ -1,0 +1,5 @@
+en:
+  episodes:
+    episode_title: 'Episode'
+    episode_message: 'Episodes was successfully %{message}'
+    not_destroy: "Episodes was not destroyed"

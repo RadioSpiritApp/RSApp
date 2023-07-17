@@ -1,0 +1,10 @@
+%p Dear User,
+%p
+  Please confirm your email
+  = @email
+%p To confirm your email click on below link:
+%p
+  = link_to users_confirm_email_url(token: @token), target: '_blank' do
+    Confirm Your Email
+%p Thanks
+%p Radio Spirits Support Team

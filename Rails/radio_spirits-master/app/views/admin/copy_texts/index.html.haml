@@ -1,0 +1,31 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('copy_texts.copy_text_title')
+      .panel-body
+        .x-scrolling-wrapper
+          - if @copy_texts.blank?
+            No record yet
+          - else
+            %table.table.table-bordered
+              %thead
+                %tr
+                  %th Page Name
+                  %th Text Details
+                  %th.text-center Actions
+              %tbody
+                - @copy_texts.each do |page_name, parameters|
+                  %tr
+                    %td= page_name
+                    %td.no_padding
+                      %table.table.table-bordered.internal_table
+                        %tbody
+                          - parameters.sort_by{|p| p.id}.each do |parameter|
+                            %tr
+                              %td{style: "width: 20%;"}
+                                %b= parameter.key.gsub("_", " ").capitalize
+                              %td{style: "width: 80%;"}= parameter.value
+                    %td.text-center
+                      = link_to admin_edit_page_details_path(page_name), class: "btn btn-sm btn-info", title: "Edit copy text" do
+                        %i.fa.fa-edit

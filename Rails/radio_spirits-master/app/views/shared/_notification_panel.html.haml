@@ -1,0 +1,27 @@
+%ul.nav.navbar-top-links.navbar-right#notifications
+  %li.dropdown
+    %a.dropdown-toggle.count-info{:href => "javascript:void(0)"}
+      %em.fa.fa-bell
+      - notification_count = get_unread_notification_count(@notifications)
+      %span.label.label-info.notification-count{class: notification_count == 0 ? 'hide' : ''}= notification_count
+    %ul.dropdown-menu.dropdown-alerts
+      - if @notifications.present?
+        - @notifications.each_with_index do |notification, index|
+          %li
+            %div
+              = link_to "javascript:void(0)", class: "#{notification.read ? '' : 'unread'} pull-right", notificationid: notification.id, title: "Mark as read" do
+                %i.fa.fa-close
+              = notification.message
+            .download_wrapper
+              - if notification.attachment.present?
+                %em.fa.fa-cloud-download
+                = link_to  'Download Error File', downlaod_error_file_admin_episodes_path(notification_id: notification.id, format: 'xlsx')
+              .pull-right.date_wrapper
+                = formated_date(notification.created_at)
+                = notification.created_at.strftime("at %I:%M%p")
+              .clearfix
+
+      - else
+        %li
+          %div
+            No notification available

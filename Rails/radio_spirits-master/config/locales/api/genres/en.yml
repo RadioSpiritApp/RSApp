@@ -1,0 +1,4 @@
+en:
+  genre_api:
+    genre_list: "Generes fetched successfully"
+    no_genre: "No genre available"

@@ -1,0 +1,22 @@
+#bulk-upload-image-modal.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.text-center
+          Upload Images
+      .modal-body
+        %h3 Upload your images directly.
+        .mar-top-20
+          Click on browse button, select the image(s) you want to upload. You can select all the images in a folder by opening the folder and press CTRL + A.
+        .mar-top-30.mar-bottom-40
+          = form_for(:bulk_images, url: image_bulk_upload_admin_images_path, html: { class: "form-horizontal", multipart: true, id: 'image_bulk_upload_form' }) do |f|
+            .error_container
+            .m-t-30
+              %label.btn.btn-primary.btn-file{:title => "Browse"} 
+                Browse
+                = f.file_field :images, class: "hidden", id: "bulk_images_upload_field", multiple: true
+              %span#files_count
+              = f.submit "Upload", class: "btn btn-primary pull-right", id: "images_file_upload", title: "Upload", style: "display: none;"
+        .clearfix

@@ -1,0 +1,22 @@
+#bulk-upload-audio-modal.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.text-center
+          Upload Audios
+      .modal-body
+        %h3 Upload your audios directly.
+        .mar-top-20
+          Click on browse button, select the audio(s) you want to upload. You can select all the audios in a folder by opening the folder and press CTRL + A.
+        .mar-top-30.mar-bottom-40
+          = form_for(:bulk_audios, url: bulk_upload_admin_audios_path, html: { class: "form-horizontal", multipart: true, id: 'audio_bulk_upload_form' }) do |f|
+            .error_container
+            .m-t-30
+              %label.btn.btn-primary.btn-file{title: "Browse"}
+                Browse
+                = f.file_field :audios, class: "hidden", id: "bulk_audios_upload_field", multiple: true
+              %span#files_count
+              = f.submit "Upload", class: "btn btn-primary pull-right", id: "audios_file_upload", title: "Upload", style: "display: none;"
+        .clearfix

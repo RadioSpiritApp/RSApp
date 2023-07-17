@@ -1,0 +1,34 @@
+#series-import-form.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %a.back-popup.pull-left#go_to_first_import_page{:type => "button"}
+          %i.fa.fa-angle-left
+        %button.close{"data-dismiss" => "modal", :type => "button"} ×
+        %h4.text-center
+          Import series in bulk from XLSX
+      .modal-body
+        %h3 Upload the completed template
+        .mar-top-30
+          Once you've added your series to the template, please upload it.
+        .mar-top-10
+          Keep in mind :
+          %ul
+            %li
+              %i.icon-long-arrow-right
+              Columns with * are required fields.
+            %li
+              %i.icon-long-arrow-right
+              Series title must be unique.
+            %li
+              %i.icon-long-arrow-right
+              To associate multiple genres with a series, separate the genre ids by new line.
+        .mar-top-30
+          The rows in XLSX having error will get rejected and you will be able to download the details from your notifications list after completion of process.
+        .m-t-30.m-b-10
+          = form_for(:file, url: upload_csv_admin_series_index_path, html: { id: 'series_csv_upload_form', multipart: true }, remote: true, authenticity_token: true) do |f|
+            .error_container
+            %label.btn.btn-primary.btn-file{title: "Browse"}
+              Browse
+              = f.file_field :selected_file, class: "hidden", id: "series-file-upload-field"

@@ -1,0 +1,31 @@
+%nav.navbar.navbar-custom.navbar-fixed-top{:role => "navigation"}
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-target" => "#sidebar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => admin_users_path, style: 'padding-left: 5px;'}
+        = image_tag('logo.png',  class: 'logo_image')
+      - if user_signed_in?
+        %ul.nav.navbar-top-links.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle.count-info{"data-toggle" => "dropdown", :href => "#"}
+              %em.fa.fa-angle-down
+            %ul.dropdown-menu.dropdown-alerts
+              %li
+                = link_to edit_user_registration_path do
+                  %div
+                    %em.fa.fa-lock
+                    Change password
+              %li.divider
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  %div
+                    %em.fa.fa-power-off
+                    Logout
+        %span.pull-right.user_details
+          Logged In as
+          = current_user.email
+      = render 'shared/notification_panel'

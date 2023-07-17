@@ -1,0 +1,9 @@
+en:
+  onboarding_buckets:
+    onboarding_bucket_title: 'Onboarding Bucket'
+    add_bucket: 'Add Bucket'
+    new_bucket: 'New Onboarding Bucket'
+    action_success_message: 'Onboarding Bucket was successfully %{message}.'
+    destroy_failure: 'Onboarding Bucket was not destroyed'
+    edit_bucket: "Edit Onboarding Bucket"
+    empty_bucket_message: "All linked users and devices were successfully removed"

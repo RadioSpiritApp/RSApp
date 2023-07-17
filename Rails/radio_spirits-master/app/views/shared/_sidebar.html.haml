@@ -1,0 +1,60 @@
+#sidebar-collapse.col-sm-3.col-lg-2.sidebar
+  %ul.nav.menu
+    %li{class: nav_class([admin_users_path])}
+      %a{href: admin_users_path}
+        %em.fa.fa-users
+        = t('users.users_title')
+    %li{class: nav_class([subscriptions_admin_users_path])}
+      %a{href: subscriptions_admin_users_path}
+        %em.fa.fa-money
+        = "Subscriptions"
+    %li{class: nav_class([admin_onboarding_buckets_path, new_admin_onboarding_bucket_path, edit_admin_onboarding_bucket_path(:id)])}
+      = link_to admin_onboarding_buckets_path do
+        %em.fa.fa-bitbucket
+        = t('onboarding_buckets.onboarding_bucket_title')
+    %li{class: nav_class([admin_subscription_buckets_path, new_admin_subscription_bucket_path, edit_admin_subscription_bucket_path(:id)])}
+      = link_to admin_subscription_buckets_path do
+        %em.fa.fa-money
+        = t('subscription_buckets.subscription_bucket_title')
+    %li{class: nav_class([admin_plans_path, new_admin_plan_path, edit_admin_plan_path(:id)])}
+      = link_to admin_plans_path do
+        %em.fa.fa-usd
+        = t('plans.plan_title')
+    %li{class: nav_class([admin_genres_path, edit_admin_genre_path(:id), new_admin_genre_path])}
+      %a{href: admin_genres_path}
+        %em.fa.fa-film
+        = t('genres.genre_title')
+    %li{class: nav_class([admin_series_index_path,  new_admin_series_path, edit_admin_series_path(:id)])}
+      %a{href: admin_series_index_path}
+        %em.fa.fa-list
+        =t('series.series_title')
+    %li{class: nav_class([admin_episodes_path,  new_admin_episode_path, edit_admin_episode_path(:id)])}
+      %a{href: admin_episodes_path}
+        %em.fa.fa-music
+        =t('episodes.episode_title')
+    %li{class: nav_class([admin_advertisements_path, edit_admin_advertisement_path(:id), new_admin_advertisement_path])}
+      %a{href: admin_advertisements_path}
+        %em.fa.fa-bullhorn
+        = t('ads.ad_title')
+    %li{class: nav_class([admin_settings_path, edit_admin_setting_path(:id), admin_edit_home_page_content_path, admin_copy_texts_path, admin_edit_page_details_path(:page_name)])}
+      %a{href: admin_settings_path}
+        %em.fa.fa-cog
+        = t('settings.setting_title')
+    - expanded = aria_expanded([admin_images_path, admin_audios_path])
+    %li.parent
+      %a{"data-toggle" => "collapse", :href => "#sub-item-1", "aria-expanded" => expanded, id: "bulk_tab"}
+        %em.fa.fa-navicon  
+        Bulk
+        %span.icon.pull-right{"data-toggle" => "collapse", :href => "#sub-item-1"}
+          %em.fa.fa-plus
+          %em.fa.fa-minus
+      %ul#sub-item-1.children.collapse{class: "#{expanded == 'true' ? 'in' : ''}", "aria-expanded" => expanded}
+        %li{class: nav_class([admin_images_path]) + "is-active" }
+          %a{:href => admin_images_path}
+            %span.fa.fa-arrow-right  
+            Image
+        %li{class: nav_class([admin_audios_path]) + "is-active"}
+          %a{:href => admin_audios_path}
+            %span.fa.fa-arrow-right  
+            Audio
+/ /.sidebar

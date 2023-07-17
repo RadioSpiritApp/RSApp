@@ -1,0 +1,13 @@
+.col-md-12.no-l-pad
+  = form_tag(search_action, method: :get) do
+    .input-group
+      .form-group.has-feedback.has-clear
+        .col-md-5{style: 'margin-left: -15px;margin-right: 60px;'}
+          = text_field_tag :search_query, params[:search_query], class: "form-control input-md rounded_corners", placeholder: placeholder_text
+        .col-md-5
+          = select_tag 'subscription_type', options_for_select([["RadioSpirit User", Subscription::RS], ["RadioVault User", Subscription::RV]], selected: params[:subscription_type] || nil), prompt: "Select Subscription Type", class: 'form-control input-md rounded_corners'
+          
+      .input-group-btn
+        = submit_tag "Search", class: "btn btn-success btn-md rounded_corners", title: "Search records"
+        = link_to "Clear", subscriptions_admin_users_path, class: "btn btn-success btn-md clear-btn rounded_corners", title: "Clear records"
+       

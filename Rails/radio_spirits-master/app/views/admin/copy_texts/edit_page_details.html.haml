@@ -1,0 +1,18 @@
+.row
+  .col-md-12.p-t-15
+    .panel.panel-default
+      .panel-heading
+        = t('copy_texts.edit_copy_text')
+        for
+        = @page_name
+      .panel-body
+        .col-md-9.col-lg-9.col-sm-12.col-xs-12
+          = form_for :copy_texts, :url => admin_update_copy_texts_path(@page_name), html:{class: 'copy_text_manager_form'} do |f|
+            - @copy_texts.each do |copy_text|
+              .form-group.required
+                %label= copy_text.key == "footer" ? "iTunes Terms" : copy_text.key.gsub("_", " ").capitalize
+                = text_field_tag "values[#{copy_text.id}]", copy_text.value, class: "form-control setting-value #{validation_class_for(copy_text)}", placeholder: "Value"
+                %br
+                = add_note_for_footer(copy_text).html_safe
+            = f.submit "Save", class: 'btn btn-primary', title: "Save copy text details"
+            = link_to 'Back', :back, class: 'btn btn-default mar-l-10', title: "Go back to previous page"
